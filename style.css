@@ -28,7 +28,7 @@ canvas {
   z-index: 2;
 
   color: #f6d6db; /* soft baby-pink */
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   letter-spacing: 0.03em;
   font-weight: 300;
 
@@ -110,3 +110,4 @@ h1 {
     );
 
 }
+
