@@ -2,15 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>meaw</title>
+  <title>Bouquet for you</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- IMPORT MAP (THIS IS THE FIX) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
+
 <body>
+  <div class="night"></div>
+
   <section class="hero">
     <canvas id="scene"></canvas>
+
     <div class="overlay">
-      <h1>
-      </h1>
       <p>This bouquet was made just for you</p>
     </div>
   </section>
@@ -18,3 +30,4 @@
   <script type="module" src="./script.js"></script>
 </body>
 </html>
+

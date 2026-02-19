@@ -4,7 +4,7 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160/examples/js
 const canvas = document.getElementById('scene');
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0e0b0b);
+scene.background = null;
 
 const camera = new THREE.PerspectiveCamera(
   45,
@@ -14,7 +14,11 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(0, 1.5, 4);
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+const renderer = new THREE.WebGLRenderer({
+  canvas,
+  antialias: true,
+  alpha: true
+});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -29,12 +33,23 @@ scene.add(keyLight);
 let bouquet;
 
 const loader = new GLTFLoader();
-loader.load('/lily.glb',
+console.log('⏳ Starting to load lily.glb...');
+loader.load('lily.glb',
   (gltf) => {
-    console.log('✅ GLB loaded');
+    console.log('✅ GLB loaded successfully');
+    console.log('Model details:', {
+      name: gltf.scene.name || 'Unnamed',
+      children: gltf.scene.children.length,
+      animations: gltf.animations ? gltf.animations.length : 0,
+      scene: gltf.scene
+    });
 
     bouquet = gltf.scene;
     scene.add(bouquet);
+    console.log('🎨 Model added to scene:', bouquet);
+    
+    // Log scene contents
+    console.log('🖼️ Scene children:', scene.children);
 
     // --- AUTO FRAME THE MODEL ---
     const box = new THREE.Box3().setFromObject(bouquet);
@@ -52,6 +67,18 @@ loader.load('/lily.glb',
   undefined,
   (error) => {
     console.error('❌ GLB load error', error);
+    console.log('Trying to list files in directory...');
+    // This will help debug if the file is in the correct location
+    fetch('.')
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const links = Array.from(doc.querySelectorAll('a'));
+        const files = links.map(link => link.href.split('/').pop()).filter(Boolean);
+        console.log('📂 Files in directory:', files);
+      })
+      .catch(e => console.error('Error listing directory:', e));
   }
 );
 
