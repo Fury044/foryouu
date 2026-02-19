@@ -19,6 +19,34 @@ canvas {
   position: relative;
   z-index: 1;
 }
+.message {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+
+  color: #f6d6db; /* soft baby-pink */
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  font-weight: 300;
+
+  opacity: 0;
+  animation: fadeUp 1.8s ease forwards;
+  animation-delay: 0.8s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
 
 .overlay {
   position: absolute;
@@ -80,4 +108,5 @@ h1 {
       rgb(0, 217, 255),
       rgb(240, 240, 240)
     );
+
 }
